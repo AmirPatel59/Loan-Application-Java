@@ -45,6 +45,7 @@ public class CustomerService {
 //		}
 		JDBC_connectivity jd = new JDBC_connectivity();
 		Customer customer = jd.viewCustomerById(id);
+		
 		return customer;
 		
 	}
@@ -56,25 +57,15 @@ public class CustomerService {
 	}
 	public void deleteCustomerById(int id) {
 		Customer customer=new Customer();
-		customer=viewCustomerById(id);
-		if(customer==null) {
-			System.out.println("Customer is not there");
-		}
-		else {
-			list.remove(customer);
-			System.out.println("Deleted Succesfully");
-		}
+		JDBC_connectivity jd=new JDBC_connectivity();
+		jd.deleteCustomer(id);
 		
 		
 	}
 
 	public Customer updateCustomer(int id) { 
-		Customer customer = viewCustomerById(id);
-		if(customer == null) {
-			return null;
-		}
-		else {
-			int index = list.indexOf(customer);
+		
+			
 			System.out.println("Enter  Customer First Name");
 			String firstName = sc.next();
 			System.out.println("Enter  Customer Last Name");
@@ -90,8 +81,8 @@ public class CustomerService {
 			System.out.println("Enter  Customer Mobile Number");
 			long mobileNumber = sc.nextLong();
 			Customer customer1=new Customer(id,firstName, lastName, password, email, gender, age, mobileNumber);
-			list.set(index, customer1);
-			return customer1;
-		}
+			JDBC_connectivity jd=new JDBC_connectivity();
+			jd.updateCustomer(id,firstName, lastName, password, email, gender, age, mobileNumber);
+			return null;
 	}
 }
