@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import com.cg.loan.dto.Customer;
+import com.cg.loan.main.Menu;
 import com.cg.loan.service.CustomerService;
 
 public class CustomerMain {
@@ -22,7 +23,8 @@ public class CustomerMain {
 			System.out.println("3.View All Customer");
 			System.out.println("4.Delete Customer By Id");
 			System.out.println("5.Update Customer By Id");
-			System.out.println("6.Exit");
+			System.out.println("6.Account Related Services");
+			System.out.println("7.Exit");
 			System.out.println("Enter Your Choice :");
 			n = sc.nextInt();
 			if (n == 1) {
@@ -67,6 +69,10 @@ public class CustomerMain {
 				}
 			}
 			if(n==6) {
+				Menu menu = new Menu();
+				menu.LoanApplicationMenu();
+			}
+			if(n==7) {
 				System.out.println("Thank you..! visit again..");
 				break;
 			}
