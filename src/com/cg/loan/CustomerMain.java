@@ -48,9 +48,7 @@ public class CustomerMain {
 			}
 			if(n==2) {
 				System.out.println("Enter Your Customer Id : ");
-				int id=sc.nextInt();
-				
-				
+				int id=sc.nextInt();		
 				System.out.println("Customer Details Are");
 				System.out.println(customerservice.viewCustomerById(id));
 				
