@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import com.cg.loan.dto.Customer;
+import com.cg.loan.main.Menu;
 import com.cg.loan.service.CustomerService;
 
 public class CustomerMain {
@@ -22,35 +23,33 @@ public class CustomerMain {
 			System.out.println("3.View All Customer");
 			System.out.println("4.Delete Customer By Id");
 			System.out.println("5.Update Customer By Id");
-			System.out.println("6.Exit");
+			System.out.println("6.Account Related Services");
+			System.out.println("7.Exit");
 			System.out.println("Enter Your Choice :");
 			n = sc.nextInt();
 			if (n == 1) {
-				System.out.println("Enter your Customer Id");
-				int id = sc.nextInt();
-				System.out.println("Enter  Customer First Name");
-				String firstName = sc.next();
-				System.out.println("Enter  Customer Last Name");
-				String lastName = sc.next();
-				System.out.println("Enter  Customer Password");
-				String password = sc.next();
-				System.out.println("Enter  Customer Email");
-				String email = sc.next();
-				System.out.println("Enter  Customer Gender");
-				String gender = sc.next();
-				System.out.println("Enter  Customer Age");
-				int age = sc.nextInt();
-				System.out.println("Enter  Customer Mobile Number");
-				long mobileNumber = sc.nextLong();
-				Customer Cust=new Customer(id,firstName, lastName, password, email, gender, age, mobileNumber);
-				customerservice.addCustomer(Cust);			
-				System.out.println("Customer Added Sucessfully with Id :"+id);
+				
+				Customer customer = customerservice.addCustomer();			
+
+				System.out.println("Customer Added Sucessfully with Id :"+customer.getCustomerId());
 			}
 			if(n==2) {
 				System.out.println("Enter Your Customer Id : ");
+
 				int id=sc.nextInt();		
 				System.out.println("Customer Details Are");
 				System.out.println(customerservice.viewCustomerById(id));
+
+				
+				if(customerservice.viewCustomerById(id)==null) {
+					System.out.println("Customer with id "+id+" is not present..");
+					
+				}
+				else {
+					System.out.println("Customer Details Are");
+					System.out.println(customerservice.viewCustomerById(id));
+				}
+
 				
 			}
 			if(n==3) {
@@ -62,6 +61,26 @@ public class CustomerMain {
 				int id=sc.nextInt();
 				customerservice.deleteCustomerById(id);
 			}
-		} while (n < 5);
+			if(n==5) {
+				System.out.println("Enter customer id to update: ");
+				int id  = sc.nextInt();
+				Customer customer = customerservice.updateCustomer(id);
+				if(customer == null) {
+					System.out.println("Customer is not present...");
+					
+				}
+				else {
+					System.out.println("Customer Updated Successfully...");
+				}
+			}
+			if(n==6) {
+				Menu menu = new Menu();
+				menu.LoanApplicationMenu();
+			}
+			if(n==7) {
+				System.out.println("Thank you..! visit again..");
+				break;
+			}
+		} while (n < 7);
 	}
 }
