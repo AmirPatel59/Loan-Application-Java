@@ -1,17 +1,17 @@
 package com.cg.loan.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.cg.loan.JDBC.JDBCLoanApplication;
+import com.cg.loan.JDBC.JDBCLoanType;
 import com.cg.loan.dto.LoanApplication;
+import com.cg.loan.dto.LoanType;
 
 
 public class LoanApplicationService {
 	Scanner sc = new Scanner(System.in);
-	List<LoanApplication> loanList = new ArrayList<>();
-
-
+	JDBCLoanApplication dbconnect=new JDBCLoanApplication();
 	public double calculateEMI(double amount, double time, double rate) {
 		rate = rate /(12*100);
 		time = time * 12;
@@ -19,68 +19,79 @@ public class LoanApplicationService {
 		return Math.ceil(emi);
 	}
 
-	public LoanApplication applyLoan() {
+	public LoanApplication applyLoan(int cid) {
 		LoanApplication loan = new LoanApplication();
-		System.out.println("Enter Customer ID:");
-		loan.setCustomerId(sc.nextInt());
-		System.out.println("1.House Loan  2.Gold Loan  3.Personal Loan");
-		System.out.println("Enter the Id of loan:");
-		loan.setLoanTypeId(sc.nextInt());
+		LoanType loanType=new LoanType();
+		loan.setCustomerId(cid);
+		System.out.println("1.House Loan  2.Gold Loan  3.Personal Loan  4.Vehicle Loan");
+		
+		int loantypeid=1;
+	    while(loantypeid<5) {
+	    	System.out.println("Enter the Id of loan:");
+	    	loantypeid=sc.nextInt();
+		if (loantypeid == 1) {
+			JDBCLoanType jd=new JDBCLoanType();
+			loanType=jd.getLoanType("Home-Loan");
+//			loan.setRateOfInterest(loanType.getRateOfInterest());
+			loan.setLoanTypeId(1);
+			break;
+		} else if (loantypeid == 2) {	
+			JDBCLoanType jd=new JDBCLoanType();
+			 loanType=jd.getLoanType("Gold-Loan");
+//			loan.setRateOfInterest(loanType.getRateOfInterest());
+			loan.setLoanTypeId(2);
+			break;
+		} else if(loantypeid == 3){
+			JDBCLoanType jd=new JDBCLoanType();
+			 loanType=jd.getLoanType("Personal-loan");
+//			loan.setRateOfInterest(loanType.getRateOfInterest());
+			loan.setLoanTypeId(3);
+			break;
+		}
+		else if(loantypeid == 4) {
+			JDBCLoanType jd=new JDBCLoanType();
+		    loanType=jd.getLoanType("Vehicle-loan");
+//			loan.setRateOfInterest(loanType.getRateOfInterest());
+			loan.setLoanTypeId(4);
+			break;
+		}
+		else {
+			System.out.println("You Entered wrong Number");
+		}
+	}
 		System.out.println("Enter Loan Amount:");
 		loan.setAmount(sc.nextDouble());
 		System.out.println("Enter Loan Repay Period in years:");
 		loan.setLoanRepayPeriod(sc.nextDouble());
-		
-		if (loan.getLoanTypeId() == 1) {
-			loan.setRateOfInterest(8);
-		} else if (loan.getLoanTypeId() == 2) {
-			loan.setRateOfInterest(7);
-		} else {
-			loan.setRateOfInterest(5);
-		}
-		
 		System.out.println("Enter Monthly Income:");
 		loan.setMonthlyIncome(sc.nextDouble());
-		loan.setEmi(calculateEMI(loan.getAmount(),loan.getLoanRepayPeriod(),loan.getRateOfInterest()));
-		loan.setLoanId(loanList.size());
+		loan.setEmi(calculateEMI(loan.getAmount(),loan.getLoanRepayPeriod(),loanType.getRateOfInterest()));
 		loan.setLoanStatus("NOT APPROVED");
-		loanList.add(loan);
+		dbconnect.applyLoan(loan.getAmount(), loan.getLoanTypeId(), loan.getEmi(),loan.getLoanRepayPeriod(), loan.getMonthlyIncome(), loan.getLoanStatus(),loan.getCustomerId());
 		return loan;
 	}
 	
+	
+	
 	public List<LoanApplication> viewAllLoansByCustomerId(int customerId){
-		List<LoanApplication> cusLoans=new ArrayList<>();
-		for(int i=0;i<loanList.size();i++) {
-			if(loanList.get(i).getCustomerId()==customerId) {
-				 cusLoans.add(loanList.get(i));
-			}
-			else {
-				return null;
-			}
-		}
+		List<LoanApplication> cusLoans=dbconnect.viewCustomerById(customerId);
 		
 		return cusLoans;
 		
 	}
 	
 	public LoanApplication viewLoanApplicationById(int loanId) {
-		LoanApplication loan=new LoanApplication();
-		for(int i=0;i<loanList.size();i++) {
-			LoanApplication loan1=loanList.get(i);
-			if(loan1.getLoanId()==loanId) {
-				loan=loan1;
-			}
-			else {
-				return null;
-			}
-		}
+		LoanApplication loan=dbconnect.viewLoanApplicationById(loanId);
 		return loan;
+		
 	}
 	
 	public LoanApplication closeLoan(int loanId) {
-		LoanApplication loan=(LoanApplication) viewLoanApplicationById(loanId);
+		LoanApplication loan=viewLoanApplicationById(loanId);
+		System.out.println(loan.getAmount());
+		
 		if(loan!=null) {
-			System.out.println("Loan Amout is : "+loan.getAmount());
+			System.out.println("Loan Amount is : "+loan.getAmount());
 			System.out.println("Pay loan amount to close loan");
 			System.out.println("1.Close Loan");
 			System.out.println("2.Exit");
@@ -91,6 +102,7 @@ public class LoanApplicationService {
 				double amount=sc.nextDouble();
 				if(loan.getAmount()==amount) {
 					loan.setLoanStatus("CLOSED");
+					dbconnect.closeLoan(loanId,loan.getLoanStatus());
 				}
 				else {
 					System.out.println("Enter the correct amount to close the loan");
@@ -105,5 +117,3 @@ public class LoanApplicationService {
 		
 	}
 }
-
-

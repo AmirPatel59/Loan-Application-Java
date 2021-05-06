@@ -3,6 +3,8 @@ package com.cg.loan.main;
 import java.util.List;
 import java.util.Scanner;
 
+import com.cg.loan.JDBC.JDBCLoanApplication;
+import com.cg.loan.dto.Customer;
 import com.cg.loan.dto.LoanApplication;
 import com.cg.loan.service.LoanApplicationService;
 
@@ -18,10 +20,10 @@ public class Menu {
 			System.out.println("2. VIEW ALL LOANS OF A CUSTOMER");
 			System.out.println("3. VIEW LOAN APPLICATION BY LOAN ID");
 			System.out.println("4. CHECK / CLOSE LOAN");
-			System.out.println("5. Logout");
+			System.out.println("5. EXIT");
 		}
 
-		public void LoanApplicationMenu() {
+		public void LoanApplicationMenu(Customer customer) {
 	
 			do {
 				
@@ -30,33 +32,40 @@ public class Menu {
 				int choice = sc.nextInt();
 				switch (choice) {
 				case 1:
-					loanService.applyLoan();
+					JDBCLoanApplication dbconnect=new JDBCLoanApplication();
+					dbconnect.connect();
+					LoanApplication application= loanService.applyLoan(customer.getCustomerId());
 					System.out.println("Loan Applied Successfully");
 					break;
 				case 2:
 					System.out.println("Enter Customer ID to view all Loans:");
 					int customerId=sc.nextInt();
-					List<LoanApplication> loans=loanService.viewAllLoansByCustomerId(customerId);
-					for(LoanApplication l:loans) {
-						System.out.println(l);
-					}
+					System.out.println(loanService.viewAllLoansByCustomerId(customerId));
+					
 					break;
 				case 3:
 					System.out.println("Enter LoanId to view:");
 					int loanId=sc.nextInt();
-					System.out.println(loanService.viewLoanApplicationById(loanId));
+					if(loanService.viewLoanApplicationById(loanId)==null) {
+						System.out.println("Loan with ID "+loanId+" is not present");
+					}
+					else {
+//						System.out.println(loanService.viewLoanApplicationById(loanId));
+					}
+					
 					
 					break;
 				case 4:
-					System.out.println("Enter LoanId to view:");
+					System.out.println("Enter LoanId to view Status:");
 					loanId=sc.nextInt();
 					System.out.println(loanService.closeLoan(loanId));
 					break;
 				case 5:
 					System.out.println("Thanks for using C-Evils Bank Services");
+					System.exit(0);
 					break;	
 				default:
-					break;
+					System.exit(0);
 					
 				}
 				System.out.println("Do you want to continue (Y/N):");
@@ -65,5 +74,3 @@ public class Menu {
 		}
 
 	}
-
-

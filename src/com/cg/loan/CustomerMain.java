@@ -84,7 +84,7 @@ public class CustomerMain {
 				else {
 					System.out.println("Login successful...");
 					Menu menu = new Menu();
-					menu.LoanApplicationMenu();
+					menu.LoanApplicationMenu(customer);
 				}
 				
 			}
