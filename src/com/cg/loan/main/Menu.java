@@ -18,7 +18,7 @@ public class Menu {
 			System.out.println("2. VIEW ALL LOANS OF A CUSTOMER");
 			System.out.println("3. VIEW LOAN APPLICATION BY LOAN ID");
 			System.out.println("4. CHECK / CLOSE LOAN");
-			System.out.println("5. EXIT");
+			System.out.println("5. Logout");
 		}
 
 		public void LoanApplicationMenu() {
@@ -54,10 +54,9 @@ public class Menu {
 					break;
 				case 5:
 					System.out.println("Thanks for using C-Evils Bank Services");
-					System.exit(0);
 					break;	
 				default:
-					System.exit(0);
+					break;
 					
 				}
 				System.out.println("Do you want to continue (Y/N):");

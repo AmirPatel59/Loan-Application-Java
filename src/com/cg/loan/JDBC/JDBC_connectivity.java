@@ -172,4 +172,34 @@ public class JDBC_connectivity {
 		
 	}
 
+	public Customer login(String email, String password2) {
+		Customer customer = new Customer();
+		try {
+
+			Connection connection = DriverManager.getConnection(url, user, password);
+			String query = "SELECT customer_id, first_name, last_name, email, password, age, gender, mobile_number\r\n"
+					 +"	FROM public.customer where email='"+email+"' and password = '"+password2+"'";
+
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(query);
+			while(result.next()) {
+				customer.setCustomerId(result.getInt(1));
+				customer.setFirstName(result.getString(2));
+				customer.setLastName(result.getString(3));
+				customer.setEmail(result.getString(4));
+				customer.setPassword(result.getString(5));
+				customer.setAge(result.getInt(6));
+				customer.setGender(result.getString(7));
+				customer.setMobileNumber(result.getLong(8));
+				
+			}
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return customer;
+	}
+
 }

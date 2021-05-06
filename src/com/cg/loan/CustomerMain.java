@@ -22,8 +22,8 @@ public class CustomerMain {
 			System.out.println("2.View Customer By Id");
 			System.out.println("3.View All Customer");
 			System.out.println("4.Delete Customer By Id");
-			System.out.println("5.Update Customer By Id");
-			System.out.println("6.Account Related Services");
+			System.out.println("5.Update Customer By Id");			
+			System.out.println("6.Login as a customer");
 			System.out.println("7.Exit");
 			System.out.println("Enter Your Choice :");
 			n = sc.nextInt();
@@ -70,13 +70,29 @@ public class CustomerMain {
 //				}
 			}
 			if (n == 6) {
-				Menu menu = new Menu();
-				menu.LoanApplicationMenu();
+				System.out.println("Login");
+				System.out.println("Enter Email id:");
+				String email =sc.next();
+				System.out.println("Enter Password:");
+				String password = sc.next();
+				
+				Customer customer = customerservice.login(email, password);
+				
+				if(customer.getEmail() == null) {
+					System.out.println("Invalid credintials....");
+				}
+				else {
+					System.out.println("Login successful...");
+					Menu menu = new Menu();
+					menu.LoanApplicationMenu();
+				}
+				
 			}
+			
 			if (n == 7) {
 				System.out.println("Thank you..! visit again..");
 				break;
 			}
-		} while (n < 7);
+		} while (n < 8);
 	}
 }
