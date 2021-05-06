@@ -11,12 +11,13 @@ import java.util.List;
 
 import com.cg.loan.dto.Customer;
 import com.cg.loan.dto.LoanApplication;
+import com.cg.loan.dto.LoanType;
 
 public class JDBCLoanApplication {
 
 	private final String url = "jdbc:postgresql://localhost/Loan";
 	private final String user = "postgres";
-	private final String password = "Amir1301@";
+	private final String password = "aniket1998";
 
 	public void connect() {
 		try {
@@ -55,21 +56,24 @@ public class JDBCLoanApplication {
 		try {
 			
 			Connection connection = DriverManager.getConnection(url, user, password);
-			String query = "SELECT customerid,loanid, amount, loan_type_id,  period, roi, emi, income, loan_status FROM public.loans where customerid = "+ customerId;
+			String query = "SELECT loanid, amount, loan_type_id,  period, emi, income, loan_status FROM public.loans where customerid = "+ customerId;
 
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
 			
 			while(result.next()) {
-				System.out.println("Customer ID: "+result.getInt(1));
-				System.out.println("Loan ID: "+result.getInt(2));
-				System.out.println("Loan Amount: "+result.getDouble(3));
-				System.out.println("Loan Type Id: "+result.getInt(4));
-				System.out.println("Loan Repay Period: "+result.getDouble(5));
-				System.out.println("Rate Of Interest: "+result.getDouble(6));
-				System.out.println("Emi to be Paid: "+result.getDouble(7));
-				System.out.println("Monthly Income: "+result.getDouble(8));
-				System.out.println("Loan Status: "+result.getString(9));
+				
+				System.out.println("Loan ID: "+result.getInt(1));
+				System.out.println("Loan Amount: "+result.getDouble(2));
+				JDBCLoanType jdbc = new JDBCLoanType();
+				LoanType ltype = jdbc.getLoanTypeId(result.getInt(3));
+				System.out.println("Loan Type: "+ltype.getLoanName());
+				System.out.println("Rate of Interest: "+ltype.getRateOfInterest());
+				System.out.println("Loan Repay Period: "+result.getDouble(4));
+				System.out.println("Emi to be Paid: "+result.getDouble(5));
+				System.out.println("Monthly Income: "+result.getDouble(6));
+				System.out.println("Loan Status: "+result.getString(7));
+				System.out.println("");
 				
 			}
 
@@ -87,32 +91,31 @@ public class JDBCLoanApplication {
 		try {
 			
 			Connection connection = DriverManager.getConnection(url, user, password);
-			String query = "SELECT customerid,loanid, amount, loan_type_id,  period, roi, emi, income, loan_status FROM public.loans where loanid = "+ loanId;
+			String query = "SELECT loanid, amount, loan_type_id, period, emi, income, loan_status FROM public.loans where loanid = "+ loanId;
 
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
 
 			
 			while(result.next()) {
-				System.out.println("Customer ID: "+result.getInt(1));
-				System.out.println("Loan ID: "+result.getInt(2));
-				System.out.println("Loan Amount: "+result.getDouble(3));
-				System.out.println("Loan Type Id: "+result.getInt(4));
-				System.out.println("Loan Repay Period in years: "+result.getDouble(5));
-				System.out.println("Rate Of Interest: "+result.getDouble(6));
-				System.out.println("Emi to be Paid: "+result.getDouble(7));
-				System.out.println("Monthly Income: "+result.getDouble(8));
-				System.out.println("Loan Status: "+result.getString(9));
+				System.out.println("Loan ID: "+result.getInt(1));
+				System.out.println("Loan Amount: "+result.getDouble(2));
+				JDBCLoanType jdbc = new JDBCLoanType();
+				LoanType ltype = jdbc.getLoanTypeId(result.getInt(3));
+				System.out.println("Loan Type: "+ltype.getLoanName());
+				System.out.println("Rate of Interest: "+ltype.getRateOfInterest());
+				System.out.println("Loan Repay Period: "+result.getDouble(4));
+				System.out.println("Emi to be Paid: "+result.getDouble(5));
+				System.out.println("Monthly Income: "+result.getDouble(6));
+				System.out.println("Loan Status: "+result.getString(7));
 				
-				loan.setCustomerId(result.getInt(1));
-				loan.setAmount(result.getDouble(3));
-				loan.setLoanId(result.getInt(2));
-				loan.setLoanTypeId(result.getInt(4));
-				loan.setLoanRepayPeriod(result.getDouble(5));
-				loan.setRateOfInterest(result.getDouble(6));
-				loan.setEmi(result.getDouble(7));
-				loan.setMonthlyIncome(result.getDouble(8));
-				loan.setLoanStatus(result.getString(9));
+				loan.setLoanId(result.getInt(1));
+				loan.setAmount(result.getDouble(2));
+				loan.setLoanTypeId(result.getInt(3));
+				loan.setLoanRepayPeriod(result.getDouble(4));
+				loan.setEmi(result.getDouble(5));
+				loan.setMonthlyIncome(result.getDouble(6));
+				loan.setLoanStatus(result.getString(7));
 
 			}
 
@@ -143,6 +146,41 @@ public class JDBCLoanApplication {
 
 		}
 		
+	}
+
+	public List<LoanApplication> viewAllLoans() {
+		List<LoanApplication> loanList=new ArrayList<>();
+		LoanApplication loan=new LoanApplication();
+		try {
+			
+			Connection connection = DriverManager.getConnection(url, user, password);
+			String query = "SELECT loanid, amount, loan_type_id,  period, emi, income, loan_status, customerid FROM public.loans";
+
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(query);
+			
+			while(result.next()) {
+				
+				System.out.println("Loan ID: "+result.getInt(1));
+				System.out.println("Loan Amount: "+result.getDouble(2));
+				JDBCLoanType jdbc = new JDBCLoanType();
+				LoanType ltype = jdbc.getLoanTypeId(result.getInt(3));
+				System.out.println("Loan Type: "+ltype.getLoanName());
+				System.out.println("Rate of Interest: "+ltype.getRateOfInterest());
+				System.out.println("Loan Repay Period: "+result.getDouble(4));
+				System.out.println("Emi to be Paid: "+result.getDouble(5));
+				System.out.println("Monthly Income: "+result.getDouble(6));
+				System.out.println("Loan Status: "+result.getString(7));
+				System.out.println("Customer Id: "+result.getInt(8));
+				System.out.println("");
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return null;
 	}
 
 }

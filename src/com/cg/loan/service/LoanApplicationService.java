@@ -43,14 +43,14 @@ public class LoanApplicationService {
 			break;
 		} else if(loantypeid == 3){
 			JDBCLoanType jd=new JDBCLoanType();
-			 loanType=jd.getLoanType("Personal-loan");
+			 loanType=jd.getLoanType("Personal-Loan");
 //			loan.setRateOfInterest(loanType.getRateOfInterest());
 			loan.setLoanTypeId(3);
 			break;
 		}
 		else if(loantypeid == 4) {
 			JDBCLoanType jd=new JDBCLoanType();
-		    loanType=jd.getLoanType("Vehicle-loan");
+		    loanType=jd.getLoanType("Vehicle-Loan");
 //			loan.setRateOfInterest(loanType.getRateOfInterest());
 			loan.setLoanTypeId(4);
 			break;
@@ -75,6 +75,12 @@ public class LoanApplicationService {
 	
 	public List<LoanApplication> viewAllLoansByCustomerId(int customerId){
 		List<LoanApplication> cusLoans=dbconnect.viewCustomerById(customerId);
+		
+		return cusLoans;
+		
+	}
+	public List<LoanApplication> viewAllLoans(){
+		List<LoanApplication> cusLoans=dbconnect.viewAllLoans();
 		
 		return cusLoans;
 		
