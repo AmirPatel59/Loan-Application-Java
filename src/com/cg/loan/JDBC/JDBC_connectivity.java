@@ -15,7 +15,7 @@ public class JDBC_connectivity {
 
 	private final String url = "jdbc:postgresql://localhost/Loan";
 	private final String user = "postgres";
-	private final String password = "aniket1998";
+	private final String password = "postgree";
 
 	public void connect() {
 		try {

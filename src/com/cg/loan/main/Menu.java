@@ -3,6 +3,7 @@ package com.cg.loan.main;
 import java.util.List;
 import java.util.Scanner;
 
+import com.cg.loan.JDBC.JDBCLoanApplication;
 import com.cg.loan.dto.LoanApplication;
 import com.cg.loan.service.LoanApplicationService;
 
@@ -30,25 +31,31 @@ public class Menu {
 				int choice = sc.nextInt();
 				switch (choice) {
 				case 1:
-					loanService.applyLoan();
+					JDBCLoanApplication dbconnect=new JDBCLoanApplication();
+					dbconnect.connect();
+					LoanApplication application= loanService.applyLoan();
 					System.out.println("Loan Applied Successfully");
 					break;
 				case 2:
 					System.out.println("Enter Customer ID to view all Loans:");
 					int customerId=sc.nextInt();
-					List<LoanApplication> loans=loanService.viewAllLoansByCustomerId(customerId);
-					for(LoanApplication l:loans) {
-						System.out.println(l);
-					}
+					System.out.println(loanService.viewAllLoansByCustomerId(customerId));
+					
 					break;
 				case 3:
 					System.out.println("Enter LoanId to view:");
 					int loanId=sc.nextInt();
-					System.out.println(loanService.viewLoanApplicationById(loanId));
+					if(loanService.viewLoanApplicationById(loanId)==null) {
+						System.out.println("Loan with ID "+loanId+" is not present");
+					}
+					else {
+//						System.out.println(loanService.viewLoanApplicationById(loanId));
+					}
+					
 					
 					break;
 				case 4:
-					System.out.println("Enter LoanId to view:");
+					System.out.println("Enter LoanId to view Status:");
 					loanId=sc.nextInt();
 					System.out.println(loanService.closeLoan(loanId));
 					break;
