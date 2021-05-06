@@ -15,7 +15,7 @@ public class JDBC_connectivity {
 
 	private final String url = "jdbc:postgresql://localhost/Loan";
 	private final String user = "postgres";
-	private final String password = "Amir1301@";
+	private final String password = "aniket1998";
 
 	public void connect() {
 		try {
@@ -135,7 +135,8 @@ public class JDBC_connectivity {
 		return null;
 	}
 
-	public Customer deleteCustomer(int id) {
+	public void deleteCustomer(int id) {
+		int cid=0;
 		try {
 
 			Connection connection = DriverManager.getConnection(url, user, password);
@@ -144,17 +145,18 @@ public class JDBC_connectivity {
 
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 
-		}
-		return null;
+	}
+
+		
 	}
 
 	public void updateCustomer(int id, String firstName, String lastName, String password2, String email, String gender,
 			int age, long mobileNumber) {
-		// TODO Auto-generated method stub
+	
 		try {
 
 			Connection connection = DriverManager.getConnection(url, user, password);

@@ -58,14 +58,26 @@ public class CustomerService {
 	public void deleteCustomerById(int id) {
 		Customer customer=new Customer();
 		JDBC_connectivity jd=new JDBC_connectivity();
-		jd.deleteCustomer(id);
+		customer = viewCustomerById(id);
+		if(customer==null) {
+			System.out.println("Customer not found..");
+		}
+		else {
+			
+			jd.deleteCustomer(id);
+			System.out.println("Customer deleted successfully...");
+		}
 		
 		
 	}
 
 	public Customer updateCustomer(int id) { 
 		
-			
+			Customer customer=viewCustomerById(id);
+			if(customer==null) {
+				System.out.println("Customer is not present with id:"+id);
+			}
+			else {
 			System.out.println("Enter  Customer First Name");
 			String firstName = sc.next();
 			System.out.println("Enter  Customer Last Name");
@@ -83,6 +95,8 @@ public class CustomerService {
 			Customer customer1=new Customer(id,firstName, lastName, password, email, gender, age, mobileNumber);
 			JDBC_connectivity jd=new JDBC_connectivity();
 			jd.updateCustomer(id,firstName, lastName, password, email, gender, age, mobileNumber);
+			System.out.println("customer updated sucessfull!!!");
+			}
 			return null;
 	}
 }
