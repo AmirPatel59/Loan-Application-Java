@@ -15,7 +15,8 @@ public class Menu {
 		LoanApplicationService loanService=new LoanApplicationService();
 		String userChoice;
 		
-		void menu() {
+		void menu(String name, int id) {
+			System.out.println("Hello "+name+" id "+id );
 			System.out.println("1. APPLY FOR LOAN");
 			System.out.println("2. VIEW ALL LOANS OF A CUSTOMER");
 			System.out.println("3. VIEW LOAN APPLICATION BY LOAN ID");
@@ -27,7 +28,7 @@ public class Menu {
 	
 			do {
 				
-				menu();
+				menu(customer.getFirstName(),customer.getCustomerId());
 				System.out.println("Enter the your Choice: ");
 				int choice = sc.nextInt();
 				switch (choice) {
@@ -38,15 +39,14 @@ public class Menu {
 					System.out.println("Loan Applied Successfully");
 					break;
 				case 2:
-					System.out.println("Enter Customer ID to view all Loans:");
-					int customerId=sc.nextInt();
-					System.out.println(loanService.viewAllLoansByCustomerId(customerId));
+				
+					System.out.println(loanService.viewAllLoansByCustomerId(customer.getCustomerId()));
 					
 					break;
 				case 3:
 					System.out.println("Enter LoanId to view:");
 					int loanId=sc.nextInt();
-					if(loanService.viewLoanApplicationById(loanId)==null) {
+					if(loanService.viewLoanApplicationById(loanId).getLoanId()==0) {
 						System.out.println("Loan with ID "+loanId+" is not present");
 					}
 					else {
