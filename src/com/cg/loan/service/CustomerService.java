@@ -95,8 +95,14 @@ public class CustomerService {
 			Customer customer1=new Customer(id,firstName, lastName, password, email, gender, age, mobileNumber);
 			JDBC_connectivity jd=new JDBC_connectivity();
 			jd.updateCustomer(id,firstName, lastName, password, email, gender, age, mobileNumber);
-			System.out.println("customer updated sucessfull!!!");
+			System.out.println("customer updated sucessfull!!! ");
 			}
 			return null;
+	}
+
+	public Customer login(String email, String password) {
+		JDBC_connectivity jdbc = new JDBC_connectivity();
+		Customer customer = jdbc.login(email,password);
+		return customer;
 	}
 }
