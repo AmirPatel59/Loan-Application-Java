@@ -15,7 +15,7 @@ public class JDBC_connectivity {
 
 	private final String url = "jdbc:postgresql://localhost/Loan";
 	private final String user = "postgres";
-	private final String password = "aniket1998";
+	private final String password = "Amir1301@";
 
 	public void connect() {
 		try {
@@ -42,7 +42,7 @@ public class JDBC_connectivity {
 		try {
 
 			Connection connection = DriverManager.getConnection(url, user, password);
-			String query = "INSERT INTO public.customer(customerid, firstname, lastname, email, password, age, gender, mobileno) VALUES ("
+			String query = "INSERT INTO public.customer(customer_id, first_name, last_name, email, password, age, gender, mobile_number) VALUES ("
 					+ customerid + ",'" + firstname + "','" + lastname + "','" + email + "','" + password1 + "'," + age
 					+ ",'" + gender + "'," + mobileno + ")";
 
@@ -60,8 +60,8 @@ public class JDBC_connectivity {
 		try {
 			
 			Connection connection = DriverManager.getConnection(url, user, password);
-			String query = "SELECT customerid, firstname, lastname, email, password, age, gender, mobileno\r\n"
-					+ "	FROM public.customer where customerid = "+id;
+			String query = "SELECT customer_id, first_name, last_name, email, password, age, gender, mobile_number\r\n"
+					+ "	FROM public.customer where customer_id = "+id;
 
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
@@ -102,7 +102,7 @@ public class JDBC_connectivity {
 		try {
 
 			Connection connection = DriverManager.getConnection(url, user, password);
-			String query = "SELECT customerid, firstname, lastname, email, password, age, gender, mobileno FROM public.customer";
+			String query = "SELECT customer_id, first_name, last_name, email, password, age, gender, mobile_number FROM public.customer";
 
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
@@ -135,6 +135,39 @@ public class JDBC_connectivity {
 		return null;
 	}
 
-	
+	public Customer deleteCustomer(int id) {
+		try {
+
+			Connection connection = DriverManager.getConnection(url, user, password);
+			String query = "DELETE FROM public.customer\r\n"
+					+ "	WHERE customer_id="+id;
+
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return null;
+	}
+
+	public void updateCustomer(int id, String firstName, String lastName, String password2, String email, String gender,
+			int age, long mobileNumber) {
+		// TODO Auto-generated method stub
+		try {
+
+			Connection connection = DriverManager.getConnection(url, user, password);
+			String query = "UPDATE public.customer SET customer_id="+id+", first_name='"+firstName+"', last_name='"+lastName+"', email='"+email+"', password='"+password2+"', gender='"+gender+"', age="+age+", mobile_number="+mobileNumber+" WHERE customer_id="+id;
+
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		
+	}
 
 }
