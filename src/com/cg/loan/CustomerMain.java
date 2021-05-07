@@ -1,10 +1,6 @@
 package com.cg.loan;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Stream;
-
 import com.cg.loan.JDBC.JDBC_connectivity;
 import com.cg.loan.dto.Customer;
 import com.cg.loan.main.Menu;
@@ -22,7 +18,7 @@ public class CustomerMain {
 			System.out.println("2.View Customer By Id");
 			System.out.println("3.View All Customer");
 			System.out.println("4.Delete Customer By Id");
-			System.out.println("5.Update Customer By Id");			
+			System.out.println("5.Update Customer By Id");
 			System.out.println("6.Login as a customer");
 			System.out.println("7.Exit");
 			System.out.println("Enter Your Choice :");
@@ -62,33 +58,27 @@ public class CustomerMain {
 				int id = sc.nextInt();
 				Customer customer = customerservice.updateCustomer(id);
 				System.out.println("Customer Updated Successfully...");
-//				if (customer == null) {
-//					System.out.println("Customer is not present...");
-//
-//				} else {
-//					System.out.println("Customer Updated Successfully...");
-//				}
+
 			}
 			if (n == 6) {
 				System.out.println("Login");
 				System.out.println("Enter Email id:");
-				String email =sc.next();
+				String email = sc.next();
 				System.out.println("Enter Password:");
 				String password = sc.next();
-				
+
 				Customer customer = customerservice.login(email, password);
-				
-				if(customer.getEmail() == null) {
+
+				if (customer.getEmail() == null) {
 					System.out.println("Invalid credintials....");
-				}
-				else {
+				} else {
 					System.out.println("Login successful...");
 					Menu menu = new Menu();
 					menu.LoanApplicationMenu(customer);
 				}
-				
+
 			}
-			
+
 			if (n == 7) {
 				System.out.println("Thank you..! visit again..");
 				break;

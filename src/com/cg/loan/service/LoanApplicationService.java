@@ -23,7 +23,7 @@ public class LoanApplicationService {
 		LoanApplication loan = new LoanApplication();
 		LoanType loanType=new LoanType();
 		loan.setCustomerId(cid);
-		System.out.println("1.House Loan  2.Gold Loan  3.Personal Loan  4.Vehicle Loan");
+		System.out.println("1.Home Loan  2.Gold Loan  3.Personal Loan  4.Vehicle Loan");
 		
 		int loantypeid=1;
 	    while(loantypeid<5) {
@@ -32,26 +32,22 @@ public class LoanApplicationService {
 		if (loantypeid == 1) {
 			JDBCLoanType jd=new JDBCLoanType();
 			loanType=jd.getLoanType("Home-Loan");
-//			loan.setRateOfInterest(loanType.getRateOfInterest());
 			loan.setLoanTypeId(1);
 			break;
 		} else if (loantypeid == 2) {	
 			JDBCLoanType jd=new JDBCLoanType();
-			 loanType=jd.getLoanType("Gold-Loan");
-//			loan.setRateOfInterest(loanType.getRateOfInterest());
+			loanType=jd.getLoanType("Gold-Loan");
 			loan.setLoanTypeId(2);
 			break;
 		} else if(loantypeid == 3){
 			JDBCLoanType jd=new JDBCLoanType();
-			 loanType=jd.getLoanType("Personal-Loan");
-//			loan.setRateOfInterest(loanType.getRateOfInterest());
+			loanType=jd.getLoanType("Personal-Loan");
 			loan.setLoanTypeId(3);
 			break;
 		}
 		else if(loantypeid == 4) {
 			JDBCLoanType jd=new JDBCLoanType();
 		    loanType=jd.getLoanType("Vehicle-Loan");
-//			loan.setRateOfInterest(loanType.getRateOfInterest());
 			loan.setLoanTypeId(4);
 			break;
 		}
@@ -75,13 +71,11 @@ public class LoanApplicationService {
 	
 	public List<LoanApplication> viewAllLoansByCustomerId(int customerId){
 		List<LoanApplication> cusLoans=dbconnect.viewCustomerById(customerId);
-		
 		return cusLoans;
 		
 	}
 	public List<LoanApplication> viewAllLoans(){
 		List<LoanApplication> cusLoans=dbconnect.viewAllLoans();
-		
 		return cusLoans;
 		
 	}
