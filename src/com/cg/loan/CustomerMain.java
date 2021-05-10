@@ -1,10 +1,7 @@
 package com.cg.loan;
 
 import java.util.Scanner;
-<<<<<<< HEAD
 
-=======
->>>>>>> 50e7941fef64a1d1046314099a82fd7453ced859
 import com.cg.loan.JDBC.JDBC_connectivity;
 import com.cg.loan.dto.Customer;
 import com.cg.loan.main.Menu;
@@ -29,18 +26,9 @@ public class CustomerMain {
 		Scanner sc = new Scanner(System.in);
 		int n = 0;
 		do {
-<<<<<<< HEAD
+
 			main.menu();
-=======
-			System.out.println("--------------------MENU----------------------------");
-			System.out.println("1.ADD Customer");
-			System.out.println("2.View Customer By Id");
-			System.out.println("3.View All Customer");
-			System.out.println("4.Delete Customer By Id");
-			System.out.println("5.Update Customer By Id");
-			System.out.println("6.Login as a customer");
-			System.out.println("7.Exit");
->>>>>>> 50e7941fef64a1d1046314099a82fd7453ced859
+			
 			System.out.println("Enter Your Choice :");
 			n = sc.nextInt();
 			if (n == 1) {
