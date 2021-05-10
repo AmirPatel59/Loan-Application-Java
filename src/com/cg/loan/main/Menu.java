@@ -1,8 +1,8 @@
 package com.cg.loan.main;
 
-import java.util.List;
 import java.util.Scanner;
 
+import com.cg.loan.CustomerMain;
 import com.cg.loan.JDBC.JDBCLoanApplication;
 import com.cg.loan.dto.Customer;
 import com.cg.loan.dto.LoanApplication;
@@ -61,8 +61,8 @@ public class Menu {
 					System.out.println(loanService.closeLoan(loanId));
 					break;
 				case 5:
-					System.out.println("Thanks for using C-Evils Bank Services");
-					System.exit(0);
+					CustomerMain home=new CustomerMain();
+					home.main(null);
 					break;	
 				default:
 					System.exit(0);

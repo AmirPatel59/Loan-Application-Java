@@ -11,7 +11,7 @@ import com.cg.loan.dto.LoanType;
 public class JDBCLoanType {
 	private final String url = "jdbc:postgresql://localhost/Loan";
 	private final String user = "postgres";
-	private final String password = "aniket1998";
+	private final String password = "postgree";
 
 	public LoanType getLoanType(String type) {
 
