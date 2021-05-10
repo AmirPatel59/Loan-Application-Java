@@ -25,12 +25,6 @@ public class JDBC_connectivity {
 			} else {
 				System.out.println("Connection failed...");
 			}
-//				Statement statement = connection.createStatement();
-//				ResultSet resultSet = statement.executeQuery("SELECT id, name\r\n"
-//						+ "	FROM public.\"Customer\"");
-//				if(resultSet.next()) {
-//					System.out.println(resultSet.getString(1)+ resultSet.getString(2));
-//				}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -67,14 +61,6 @@ public class JDBC_connectivity {
 			ResultSet result = statement.executeQuery(query);
 			
 			while(result.next()) {
-//				System.out.println("Customer ID is:"+result.getInt(1));
-//				System.out.println("First name:"+result.getString(2));
-//				System.out.println("Last name:"+result.getString(3));
-//				System.out.println("email id :"+result.getString(4));
-//				System.out.println("Password :"+result.getString(5));
-//				System.out.println("Age :"+result.getInt(6));
-//				System.out.println("Gender :"+result.getString(7));
-//				System.out.println("Mobile No :"+result.getLong(8));
 				customer.setFirstName(result.getString(2));
 				customer.setLastName(result.getString(3));
 				customer.setEmail(result.getString(4));
@@ -109,15 +95,6 @@ public class JDBC_connectivity {
 			
 
 			while(result.next()) {
-//				customer.setCustomerId(result.getInt(1));
-//				customer.setFirstName(result.getString(2));
-//				customer.setLastName(result.getString(3));
-//				customer.setEmail(result.getString(4));
-//				customer.setPassword(result.getString(5));
-//				customer.setAge(result.getInt(6));
-//				customer.setGender(result.getString(7));
-//				customer.setMobileNumber(result.getLong(8));
-				
 				System.out.println("Customer ID is:"+result.getInt(1));
 				System.out.println("First name:"+result.getString(2));
 				System.out.println("Last name:"+result.getString(3));
@@ -148,10 +125,7 @@ public class JDBC_connectivity {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-
-	}
-
-		
+		}
 	}
 
 	public void updateCustomer(int id, String firstName, String lastName, String password2, String email, String gender,
