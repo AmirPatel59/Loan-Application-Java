@@ -9,6 +9,15 @@ public class Customer {
 	private String gender;
 	private int age;
 	private long mobileNumber;
+	private int loanId;
+
+	public int getLoanId() {
+		return loanId;
+	}
+
+	public void setLoanId(int loanId) {
+		this.loanId = loanId;
+	}
 
 	public Customer() {
 		super();

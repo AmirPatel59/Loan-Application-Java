@@ -12,25 +12,25 @@ public class CustomerService {
 	Scanner sc = new Scanner(System.in);
 
 	public Customer addCustomer() {
-		System.out.println("Enter your Customer Id");
-		int id = sc.nextInt();
+//		System.out.println("Enter your Customer Id");
+//		int id = sc.nextInt();
 		System.out.println("Enter  Customer First Name");
 		String firstName = sc.next();
 		System.out.println("Enter  Customer Last Name");
 		String lastName = sc.next();
-		System.out.println("Enter  Customer Password");
-		String password = sc.next();
 		System.out.println("Enter  Customer Email");
 		String email = sc.next();
+		System.out.println("Enter  Customer Password");
+		String password = sc.next();
 		System.out.println("Enter  Customer Gender");
 		String gender = sc.next();
 		System.out.println("Enter  Customer Age");
 		int age = sc.nextInt();
 		System.out.println("Enter  Customer Mobile Number");
 		long mobileNumber = sc.nextLong();
-		Customer customer = new Customer(id, firstName, lastName, password, email, gender, age, mobileNumber);
+		Customer customer = new Customer( firstName, lastName, password, email, gender, age, mobileNumber);
 		JDBC_connectivity jdb = new JDBC_connectivity();
-		jdb.addCustomer(id, firstName, lastName, email, password, age, gender, mobileNumber);
+		jdb.addCustomer( firstName, lastName, email, password, age, gender, mobileNumber);
 		return customer;
 	}
 

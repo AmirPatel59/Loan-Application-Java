@@ -1,9 +1,8 @@
 package com.cg.loan.main;
 
 import java.util.Scanner;
-
 import com.cg.loan.CustomerMain;
-import com.cg.loan.JDBC.JDBCLoanApplication;
+import com.cg.loan.JDBC.DBConnection;
 import com.cg.loan.dto.Customer;
 import com.cg.loan.dto.LoanApplication;
 import com.cg.loan.service.LoanApplicationService;
@@ -13,7 +12,8 @@ public class Menu {
 	Scanner sc = new Scanner(System.in);
 	LoanApplicationService loanService = new LoanApplicationService();
 	String userChoice;
-
+	DBConnection con=new DBConnection();
+	
 		
 	void menu(String name, int id) {
 		System.out.println("Hello " + name + " id " + id);
@@ -33,8 +33,8 @@ public class Menu {
 			int choice = sc.nextInt();
 			switch (choice) {
 			case 1:
-				JDBCLoanApplication dbconnect = new JDBCLoanApplication();
-				dbconnect.connect();
+//				JDBCLoanApplication dbconnect = new JDBCLoanApplication();
+				con.connect();
 				LoanApplication application = loanService.applyLoan(customer.getCustomerId());
 				System.out.println("Loan Applied Successfully");
 				break;

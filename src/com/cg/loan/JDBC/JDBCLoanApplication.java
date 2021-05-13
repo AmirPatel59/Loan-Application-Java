@@ -1,43 +1,24 @@
 package com.cg.loan.JDBC;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import com.cg.loan.dto.Customer;
 import com.cg.loan.dto.LoanApplication;
 import com.cg.loan.dto.LoanType;
 
 public class JDBCLoanApplication {
 
-	private final String url = "jdbc:postgresql://localhost/Loan";
-	private final String user = "postgres";
-	private final String password = "postgree";
-
-	public void connect() {
-		try {
-			Connection connection = DriverManager.getConnection(url, user, password);
-			if (connection != null) {
-				System.out.println("Connection successful with postgresql Database...");
-			} else {
-				System.out.println("Connection failed...");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	DBConnection con=new DBConnection();
+	Connection connection=con.connect();
 
 	public void applyLoan(double amount, int loan_type_id, double emi, double period, double income, String loan_status,
 			int customerid) {
 
 		try {
-			Connection connection = DriverManager.getConnection(url, user, password);
+			
 			String query = "insert into loans(amount,loan_type_id,emi,period,income,loan_status,customerid) values('"
 					+ amount + "','" + loan_type_id + "','" + emi + "','" + period + "','" + income + "','"
 					+ loan_status + "','" + customerid + "')";
@@ -54,7 +35,7 @@ public class JDBCLoanApplication {
 		LoanApplication loan = new LoanApplication();
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
+			
 			String query = "SELECT loanid, amount, loan_type_id,  period, emi, income, loan_status FROM public.loans where customerid = "
 					+ customerId;
 
@@ -89,7 +70,7 @@ public class JDBCLoanApplication {
 		LoanApplication loan = new LoanApplication();
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
+		
 			String query = "SELECT loanid, amount, loan_type_id, period, emi, income, loan_status FROM public.loans where loanid = "
 					+ loanId;
 
@@ -122,8 +103,11 @@ public class JDBCLoanApplication {
 			e.printStackTrace();
 
 		}
-//		if(loan.getLoanId()!=0) {
-//			return loan;
+		if(loan.getLoanId()==0) {
+			return null;
+		}
+//		if(loan==null) {
+//			return null;
 //		}
 		return loan;
 	}
@@ -132,7 +116,7 @@ public class JDBCLoanApplication {
 
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
+		
 			String query = "UPDATE public.loans SET loan_status='" + loanStatus + "' WHERE loanid=" + loanId;
 
 			Statement statement = connection.createStatement();
@@ -150,7 +134,7 @@ public class JDBCLoanApplication {
 		LoanApplication loan = new LoanApplication();
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
+			
 			String query = "SELECT loanid, amount, loan_type_id,  period, emi, income, loan_status, customerid FROM public.loans";
 
 			Statement statement = connection.createStatement();
@@ -184,8 +168,24 @@ public class JDBCLoanApplication {
 		LoanApplication loan = new LoanApplication();
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
+
 			String query = "UPDATE public.loans SET loan_status='Approved' WHERE loanid =" + lid;
+
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void updateLoanStatusByIssuer(int lid, String status) {
+		LoanApplication loan = new LoanApplication();
+		try {
+
+
+			String query = "UPDATE public.loans SET loan_status='"+status+"' WHERE loanId =" + lid;
 
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);

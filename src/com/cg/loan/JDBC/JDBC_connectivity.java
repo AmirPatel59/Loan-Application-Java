@@ -1,43 +1,45 @@
 package com.cg.loan.JDBC;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.cg.loan.dto.Customer;
 
 public class JDBC_connectivity {
 
-	private final String url = "jdbc:postgresql://localhost/Loan";
-	private final String user = "postgres";
-	private final String password = "postgree";
+//	private final String url = "jdbc:postgresql://localhost/Loan";
+//	private final String user = "postgres";
+//	private final String password = "postgree";
+//
+//	public void connect() {
+//		try {
+//			Connection connection = DriverManager.getConnection(url, user, password);
+//			if (connection != null) {
+//				System.out.println("Connection successful with postgresql Database...");
+//			} else {
+//				System.out.println("Connection failed...");
+//			}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	DBConnection con=new DBConnection();
+	
+	Connection connection=con.connect();
 
-	public void connect() {
-		try {
-			Connection connection = DriverManager.getConnection(url, user, password);
-			if (connection != null) {
-				System.out.println("Connection successful with postgresql Database...");
-			} else {
-				System.out.println("Connection failed...");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void addCustomer(int customerid, String firstname, String lastname, String email, String password1, int age,
+	public void addCustomer( String firstname, String lastname, String email, String password1, int age,
 			String gender, long mobileno) {
 		try {
-
-			Connection connection = DriverManager.getConnection(url, user, password);
-			String query = "INSERT INTO public.customer(customer_id, first_name, last_name, email, password, age, gender, mobile_number) VALUES ("
-					+ customerid + ",'" + firstname + "','" + lastname + "','" + email + "','" + password1 + "'," + age
+			
+		
+			String query = "INSERT INTO public.customer( first_name, last_name, email, password, age, gender, mobile_number) VALUES "
+					+ "('" + firstname + "','" + lastname + "','" + email + "','" + password1 + "'," + age
 					+ ",'" + gender + "'," + mobileno + ")";
 
 			Statement statement = connection.createStatement();
@@ -53,7 +55,7 @@ public class JDBC_connectivity {
 		Customer customer = new Customer();
 		try {
 			
-			Connection connection = DriverManager.getConnection(url, user, password);
+			
 			String query = "SELECT customer_id, first_name, last_name, email, password, age, gender, mobile_number\r\n"
 					+ "	FROM public.customer where customer_id = "+id;
 
@@ -87,7 +89,7 @@ public class JDBC_connectivity {
 		Customer customer  = new Customer();
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
+			
 			String query = "SELECT customer_id, first_name, last_name, email, password, age, gender, mobile_number FROM public.customer";
 
 			Statement statement = connection.createStatement();
@@ -116,7 +118,7 @@ public class JDBC_connectivity {
 		int cid=0;
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
+			
 			String query = "DELETE FROM public.customer\r\n"
 					+ "	WHERE customer_id="+id;
 
@@ -133,7 +135,7 @@ public class JDBC_connectivity {
 	
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
+			Connection connection=con.connect();
 			String query = "UPDATE public.customer SET customer_id="+id+", first_name='"+firstName+"', last_name='"+lastName+"', email='"+email+"', password='"+password2+"', gender='"+gender+"', age="+age+", mobile_number="+mobileNumber+" WHERE customer_id="+id;
 
 			Statement statement = connection.createStatement();
@@ -150,7 +152,7 @@ public class JDBC_connectivity {
 		Customer customer = new Customer();
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
+	
 			String query = "SELECT customer_id, first_name, last_name, email, password, age, gender, mobile_number\r\n"
 					 +"	FROM public.customer where email='"+email+"' and password = '"+password2+"'";
 

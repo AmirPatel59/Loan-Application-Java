@@ -37,8 +37,10 @@ public class LoanIssuerService {
 				} else if (n == 3) {
 					System.out.println("Enter loan Application Id:");
 					int lid = sc.nextInt();
+					System.out.println("Set the Loan Status:");
+					String status=sc.next();
 					JDBCLoanApplication jdbc = new JDBCLoanApplication();
-					jdbc.updateLoanStatus(lid);
+					jdbc.updateLoanStatusByIssuer(lid, status);
 					System.out.println("Loan Approved successfully...");
 				} else if (n == 4) {
 					System.out.println("Logout Successful...");

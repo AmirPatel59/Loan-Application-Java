@@ -1,7 +1,6 @@
 package com.cg.loan.JDBC;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,16 +8,14 @@ import java.sql.Statement;
 import com.cg.loan.dto.LoanType;
 
 public class JDBCLoanType {
-	private final String url = "jdbc:postgresql://localhost/Loan";
-	private final String user = "postgres";
-	private final String password = "postgree";
+	DBConnection con=new DBConnection();
+	Connection connection=con.connect();
 
 	public LoanType getLoanType(String type) {
 
 		LoanType ltype = new LoanType();
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
 			Statement statement = connection.createStatement();
 			String query = "SELECT loan_type_id, loan_name, roi\r\n" + "	FROM public.loan_type where loan_name='"
 					+ type + "'";
@@ -38,7 +35,6 @@ public class JDBCLoanType {
 		LoanType ltype = new LoanType();
 		try {
 
-			Connection connection = DriverManager.getConnection(url, user, password);
 			Statement statement = connection.createStatement();
 			String query = "SELECT loan_type_id, loan_name, roi\r\n" + "	FROM public.loan_type where loan_type_id='"
 					+ int1 + "'";

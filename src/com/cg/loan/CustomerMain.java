@@ -1,13 +1,13 @@
 package com.cg.loan;
 
 import java.util.Scanner;
-
-import com.cg.loan.JDBC.JDBC_connectivity;
+import com.cg.loan.JDBC.DBConnection;
 import com.cg.loan.dto.Customer;
 import com.cg.loan.main.Menu;
 import com.cg.loan.service.CustomerService;
 
 public class CustomerMain {
+	
 	
 	void menu() {
 		System.out.println("--------------------MENU----------------------------");
@@ -21,6 +21,8 @@ public class CustomerMain {
 	}
 	
 	public static void main(String[] args) {
+		DBConnection con=new DBConnection();
+//		Connection connection=con.connect();
 		CustomerMain main=new CustomerMain();
 		CustomerService customerservice = new CustomerService();
 		Scanner sc = new Scanner(System.in);
@@ -32,11 +34,11 @@ public class CustomerMain {
 			System.out.println("Enter Your Choice :");
 			n = sc.nextInt();
 			if (n == 1) {
-				JDBC_connectivity jd = new JDBC_connectivity();
-				jd.connect();
+//				JDBC_connectivity jd = new JDBC_connectivity();
+				con.connect();
 				Customer customer = customerservice.addCustomer();
 
-				System.out.println("Customer Added Sucessfully with Id :" + customer.getCustomerId());
+				System.out.println("Customer Added Sucessfully");
 			}
 			if (n == 2) {
 				System.out.println("Enter Your Customer Id : ");
