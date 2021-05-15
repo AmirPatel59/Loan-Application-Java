@@ -63,6 +63,7 @@ public class LoanApplicationService {
 		loan.setMonthlyIncome(sc.nextDouble());
 		loan.setEmi(calculateEMI(loan.getAmount(),loan.getLoanRepayPeriod(),loanType.getRateOfInterest()));
 		loan.setLoanStatus("NOT APPROVED");
+	//	loan.setCustomerId(cid);
 		dbconnect.applyLoan(loan.getAmount(), loan.getLoanTypeId(), loan.getEmi(),loan.getLoanRepayPeriod(), loan.getMonthlyIncome(), loan.getLoanStatus(),loan.getCustomerId());
 		return loan;
 	}
